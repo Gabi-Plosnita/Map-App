@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:gem_kit/widget/gem_kit_map.dart';
 import 'package:gem_kit/api/gem_sdksettings.dart';
+import 'package:map_app/HomePage/app_bar_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,38 +31,15 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Container(
-          height: 35,
-          width: MediaQuery.of(context).size.width / 1.5,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: 1.4,
-            ),
-            borderRadius: BorderRadius.circular(35),
-          ),
-          child: const Row(
-            children: [
-              Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-              Text(
-                'Search',
-                style: TextStyle(color: Colors.black),
-              ),
-            ],
-          ),
-        ),
-      ),
       body: Center(
         child: Stack(
           children: [
             GemMap(
               onMapCreated: onMapCreated,
+            ),
+            Positioned(
+              top: 35, 
+              child: AppBarWidget(),
             ),
           ],
         ),
