@@ -1,4 +1,4 @@
-name: hello_map
+name: map_app
 description: A Flutter example using Maps SDK for Flutter.
 
 publish_to: 'none'
