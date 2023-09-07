@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:map_app/HomePage/search_bar.dart';
+import 'package:map_app/HomePage/fake_search_bar.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key});
@@ -27,7 +27,7 @@ class AppBarWidget extends StatelessWidget {
               color: Color.fromRGBO(63, 81, 181, 1),
             ),
           ),
-          SearchBarWidget(),
+          FakeSearchBar(),
           Image.asset(
             'assets/right_arrow.png',
             width: 30,
