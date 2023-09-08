@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
-import 'package:gem_kit/api/gem_routingservice.dart';
+//import 'package:gem_kit/api/gem_routingservice.dart';
 import 'package:gem_kit/api/gem_searchservice.dart';
 import 'package:gem_kit/gem_kit_basic.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
@@ -11,8 +11,8 @@ import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart
 
 class LandmarkRepositoryImpl implements LandmarkRepository {
   final GemMapController mapController;
-  late LandmarkList favourites;
-  late LandmarkList history;
+  //late LandmarkList favourites;
+  //late LandmarkList history;
 
   late SearchService _searchService;
 
@@ -76,20 +76,20 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
       return lmk;
   }
 
-  @override
-  void addLandmarkToList(LandmarkList list, Landmark landmark) {
-    list.push_back(landmark);
-  }
+  // @override
+  // void addLandmarkToList(LandmarkList list, Landmark landmark) {
+  //   list.push_back(landmark);
+  // }
   
-  @override
-  bool removeLandmarkFromList(LandmarkList list, Landmark landmark) {
-    // TODO: implement removeLandmarkFromList
-    throw UnimplementedError();
-  }
+  // @override
+  // bool removeLandmarkFromList(LandmarkList list, Landmark landmark) {
+  //   // TODO: implement removeLandmarkFromList
+  //   throw UnimplementedError();
+  // }
 
-   @override
-  bool isInList(LandmarkList list, Landmark landmark) {
-    // TODO: implement isInList
-    throw UnimplementedError();
-  }
+  //  @override
+  // bool isInList(LandmarkList list, Landmark landmark) {
+  //   // TODO: implement isInList
+  //   throw UnimplementedError();
+  // }
 }
