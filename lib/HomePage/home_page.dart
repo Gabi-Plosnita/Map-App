@@ -26,6 +26,10 @@ class HomePageState extends State<HomePage> {
     mapController = controller;
 
     SdkSettings.setAppAuthorization(_token);
+
+    // mapController.registerTouchCallback((pos) {
+
+    //  })
   }
 
   @override
