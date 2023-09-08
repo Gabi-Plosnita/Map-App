@@ -27,9 +27,9 @@ class HomePageState extends State<HomePage> {
 
     SdkSettings.setAppAuthorization(_token);
 
-    // mapController.registerTouchCallback((pos) {
-
-    //  })
+  mapController.registerTouchCallback((pos) async { 
+    // functie care apeleaza cubit-ul onMapPress
+  });
   }
 
   @override
