@@ -32,30 +32,49 @@ class HomePageState extends State<HomePage> {
     InjectionContainer.init(mapController);
     context.read<HomePageCubit>().setRepos();
 
-     mapController.registerTouchCallback((pos) async { 
+    mapController.registerTouchCallback((pos) async {
       // functie care apeleaza cubit-ul onMapPress
-        await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
-      });
+      await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Stack(
-          children: [
-            BlocBuilder<HomePageCubit, HomePageCubitState>(
-              builder: (context, state) {
-                return GemMap(
+        child: BlocBuilder<HomePageCubit, HomePageCubitState>(
+          builder: (context, state) {
+            return Stack(
+              children: [
+                GemMap(
                   onMapCreated: onMapCreated,
-                );
-              },
-            ),
-            const Positioned(
-              top: 35, 
-              child: AppBarWidget(),
-            ),
-          ],
+                ),
+                const Positioned(
+                  top: 35,
+                  child: AppBarWidget(),
+                ),
+                if (state.currentState == HomePageEnumState.landmarkPressed)
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: 200,
+                      color: Colors.white,
+                      child: Row(
+                        children: [
+                          // Image.memory(
+                          //   (decodeImageData(state.currentLandmark?.getImage(30, 30))),
+                          //   width: 20, // Set the desired width
+                          //   height: 20, // Set the desired height
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

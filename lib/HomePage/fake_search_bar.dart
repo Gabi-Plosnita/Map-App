@@ -8,6 +8,7 @@ class FakeSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        // apelezi on search bar pressed din cubit //
         Navigator.pushNamed(context, searchPage);
       },
       child: Container(
