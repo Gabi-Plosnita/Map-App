@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:gem_kit/widget/gem_kit_map.dart';
 import 'package:gem_kit/api/gem_sdksettings.dart';
 import 'package:map_app/HomePage/app_bar_widget.dart';
+import 'package:map_app/InjectionContainer/injection_container.dart';
+import 'package:map_app/cubit/home_page_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,12 +27,15 @@ class HomePageState extends State<HomePage> {
 
   Future<void> onMapCreated(GemMapController controller) async {
     mapController = controller;
-
     SdkSettings.setAppAuthorization(_token);
 
-  mapController.registerTouchCallback((pos) async { 
-    // functie care apeleaza cubit-ul onMapPress
-  });
+    InjectionContainer.init(mapController);
+    context.read<HomePageCubit>().setRepos();
+
+     mapController.registerTouchCallback((pos) async { 
+      // functie care apeleaza cubit-ul onMapPress
+        await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
+      });
   }
 
   @override
@@ -38,10 +44,14 @@ class HomePageState extends State<HomePage> {
       body: Center(
         child: Stack(
           children: [
-            GemMap(
-              onMapCreated: onMapCreated,
+            BlocBuilder<HomePageCubit, HomePageCubitState>(
+              builder: (context, state) {
+                return GemMap(
+                  onMapCreated: onMapCreated,
+                );
+              },
             ),
-            Positioned(
+            const Positioned(
               top: 35, 
               child: AppBarWidget(),
             ),

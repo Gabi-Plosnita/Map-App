@@ -1,22 +1,22 @@
 part of 'home_page_cubit.dart';
 
-enum HomePageState {
+enum HomePageEnumState {
   initialState,
   landmarkPressed,
 }
 
 class HomePageCubitState extends Equatable {
-  final HomePageState currentState;
+  final HomePageEnumState currentState;
   final Point<num>? currentPosition;
   final Landmark? currentLandmark;
 
   const HomePageCubitState(
-      {this.currentState = HomePageState.initialState,
+      {this.currentState = HomePageEnumState.initialState,
       this.currentPosition,
       this.currentLandmark});
 
   HomePageCubitState copyWith(
-          {HomePageState? currentState,
+          {HomePageEnumState? currentState,
           Point<num>? currentPosition,
           Landmark? currentLandmark}) =>
       HomePageCubitState(

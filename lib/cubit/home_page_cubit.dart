@@ -21,8 +21,8 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
     Landmark? presedLandmark = await landmarkRepository!.selectLandmarkByScreenCoordinates(pos);
 
     if(presedLandmark != null){
-      print('Merge cubit');
-      emit(state.copyWith(currentState: HomePageState.landmarkPressed,currentLandmark: presedLandmark));
+      print('MERGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
+      emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmark: presedLandmark));
     }
 
   }
