@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
@@ -10,7 +8,6 @@ import 'package:gem_kit/api/gem_searchservice.dart';
 import 'package:gem_kit/gem_kit_basic.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
-import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 
 class LandmarkRepositoryImpl implements LandmarkRepository {
   final GemMapController mapController;
