@@ -81,6 +81,11 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
 
       return lmk;
   }
+
+  @override
+  void unhighlightLandmark(){
+    _mapController.deactivateAllHighlights();
+  }
   
   @override
   Future<void> followPosition() async {

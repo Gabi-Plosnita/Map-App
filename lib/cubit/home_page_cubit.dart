@@ -34,6 +34,7 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
   }
 
   void onClosedButtonPressed(){
+    landmarkRepository!.unhighlightLandmark();
     emit(state.copyWith(currentState: HomePageEnumState.initialState,currentLandmarkInfo: null));
   }
 
