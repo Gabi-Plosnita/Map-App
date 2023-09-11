@@ -36,6 +36,10 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
     emit(state.copyWith(currentState: HomePageEnumState.initialState,currentLandmarkInfo: null));
   }
 
+  Future<void> followPosition() async{
+    landmarkRepository!.followPosition();
+  }
+
   Future<Uint8List?> _decodeImageData(Uint8List data) async {
     Completer<Uint8List?> c = Completer<Uint8List?>();
 

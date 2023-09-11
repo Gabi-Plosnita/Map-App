@@ -37,6 +37,7 @@ class HomePageState extends State<HomePage> {
       // functie care apeleaza cubit-ul onMapPress
       await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
     });
+    await BlocProvider.of<HomePageCubit>(context).followPosition();
   }
 
   @override

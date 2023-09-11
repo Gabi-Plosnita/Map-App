@@ -8,6 +8,7 @@ abstract class LandmarkRepository {
   Future<List<Landmark>> searchByText(String text, Coordinates coordinates);
   Future<void> centerOnCoordinates(Coordinates coordinates);
   Future<Landmark?> selectLandmarkByScreenCoordinates(Point<num> position);
+  Future<void> followPosition();
 
   // void addLandmarkToList(LandmarkList list, Landmark landmark);
   // bool removeLandmarkFromList(LandmarkList list, Landmark landmark);
