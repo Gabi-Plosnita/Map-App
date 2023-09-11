@@ -104,7 +104,10 @@ class HomePageState extends State<HomePage> {
                                 ],
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  BlocProvider.of<HomePageCubit>(context)
+                                      .onClosedButtonPressed();
+                                },
                                 icon: const Icon(
                                   Icons.close,
                                   color: Colors.red,

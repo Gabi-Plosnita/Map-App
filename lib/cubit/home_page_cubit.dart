@@ -32,6 +32,10 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
     }
   }
 
+  void onClosedButtonPressed(){
+    emit(state.copyWith(currentState: HomePageEnumState.initialState,currentLandmarkInfo: null));
+  }
+
   Future<Uint8List?> _decodeImageData(Uint8List data) async {
     Completer<Uint8List?> c = Completer<Uint8List?>();
 
