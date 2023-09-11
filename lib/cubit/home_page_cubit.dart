@@ -1,17 +1,21 @@
+import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
 import 'package:map_app/InjectionContainer/injection_container.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
+import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 
 part 'home_page_cubit_state.dart';
 
 class HomePageCubit extends Cubit<HomePageCubitState> {
   LandmarkRepository? landmarkRepository;
 
-  HomePageCubit() : super(HomePageCubitState());
+  HomePageCubit() : super (const HomePageCubitState());
 
   void setRepos(){
     landmarkRepository = InjectionContainer.repoInstance.get<LandmarkRepository>();
@@ -21,8 +25,31 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
     Landmark? presedLandmark = await landmarkRepository!.selectLandmarkByScreenCoordinates(pos);
 
     if(presedLandmark != null){
-      emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmark: presedLandmark));
+      print('Mergeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+      final data = presedLandmark.getImage(100,100);
+      final image = await _decodeImageData(data);
+      LandmarkInfo landmarkInfo = LandmarkInfo(name: presedLandmark.getName(), coordinates: presedLandmark.getCoordinates(), image: image);
+      emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmarkInfo: landmarkInfo));
     }
-
   }
+
+  Future<Uint8List?> _decodeImageData(Uint8List data) async {
+    Completer<Uint8List?> c = Completer<Uint8List?>();
+
+    int width = 100;
+    int height = 100;
+
+    decodeImageFromPixels(data, width, height, PixelFormat.rgba8888,
+        (Image img) async {
+      final data = await img.toByteData(format: ImageByteFormat.png);
+      if (data == null) {
+        c.complete(null);
+      }
+      final list = data!.buffer.asUint8List();
+      c.complete(list);
+    });
+
+    return c.future;
+  }
+
 }

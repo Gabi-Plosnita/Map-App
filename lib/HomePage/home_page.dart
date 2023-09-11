@@ -5,6 +5,7 @@ import 'package:gem_kit/widget/gem_kit_map.dart';
 import 'package:gem_kit/api/gem_sdksettings.dart';
 import 'package:map_app/HomePage/app_bar_widget.dart';
 import 'package:map_app/InjectionContainer/injection_container.dart';
+import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 import 'package:map_app/cubit/home_page_cubit.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,6 +45,7 @@ class HomePageState extends State<HomePage> {
       body: Center(
         child: BlocBuilder<HomePageCubit, HomePageCubitState>(
           builder: (context, state) {
+            LandmarkInfo? landmarkInfo = state.currentLandmarkInfo;
             return Stack(
               children: [
                 GemMap(
@@ -59,15 +61,49 @@ class HomePageState extends State<HomePage> {
                     left: 0,
                     right: 0,
                     child: Container(
-                      height: 200,
-                      color: Colors.white,
+                      height: 130,
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Colors.grey,
+                          width: 2.0,
+                        ),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Image.memory(
-                          //   (decodeImageData(state.currentLandmark?.getImage(30, 30))),
-                          //   width: 20, // Set the desired width
-                          //   height: 20, // Set the desired height
-                          // ),
+                          Row(
+                            children: [
+                              Image.memory(
+                                ((landmarkInfo!.image)!),
+                                scale: 3,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '${landmarkInfo.name}',
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.close,
+                              color: Colors.red,
+                              size: 25,
+                            ),
+                          ),
                         ],
                       ),
                     ),

@@ -8,22 +8,22 @@ enum HomePageEnumState {
 class HomePageCubitState extends Equatable {
   final HomePageEnumState currentState;
   final Point<num>? currentPosition;
-  final Landmark? currentLandmark;
+  final LandmarkInfo? currentLandmarkInfo;
 
   const HomePageCubitState(
       {this.currentState = HomePageEnumState.initialState,
       this.currentPosition,
-      this.currentLandmark});
+      this.currentLandmarkInfo});
 
   HomePageCubitState copyWith(
           {HomePageEnumState? currentState,
           Point<num>? currentPosition,
-          Landmark? currentLandmark}) =>
+          LandmarkInfo? currentLandmarkInfo}) =>
       HomePageCubitState(
           currentState: currentState ?? this.currentState,
           currentPosition: currentPosition ?? this.currentPosition,
-          currentLandmark: currentLandmark ?? this.currentLandmark);
+          currentLandmarkInfo: currentLandmarkInfo ?? this.currentLandmarkInfo);
 
   @override
-  List<Object?> get props => [currentState,currentPosition,currentLandmark];
+  List<Object?> get props => [currentState,currentPosition,currentLandmarkInfo];
 }

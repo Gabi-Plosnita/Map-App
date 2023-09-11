@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
@@ -75,10 +77,6 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
       final lmk = await landmarks.at(0);
 
       return lmk;
-  }
-
-  LandmarkInfo getLandmarkInfo(Landmark landmark){
-    return LandmarkInfo(landmark);
   }
 
   // @override
