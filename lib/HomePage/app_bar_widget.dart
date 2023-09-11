@@ -27,7 +27,7 @@ class AppBarWidget extends StatelessWidget {
               color: Color.fromRGBO(63, 81, 181, 1),
             ),
           ),
-          FakeSearchBar(),
+          const FakeSearchBar(),
           Image.asset(
             'assets/right_arrow.png',
             width: 30,

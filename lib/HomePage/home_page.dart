@@ -119,7 +119,8 @@ class HomePageState extends State<HomePage> {
                               height: 45,
                               width: MediaQuery.of(context).size.width * 0.7,
                               decoration: BoxDecoration(
-                                color: Colors.green,
+                                color: Color.fromRGBO(63, 81, 181, 1),
+                                //color: Colors.green,
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(
                                   color: Colors.grey,
