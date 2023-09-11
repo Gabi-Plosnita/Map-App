@@ -61,8 +61,12 @@ class HomePageState extends State<HomePage> {
                     left: 0,
                     right: 0,
                     child: Container(
-                      height: 130,
-                      padding: EdgeInsets.all(10),
+                      height: 140,
+                      padding: const EdgeInsets.only(
+                        left: 16.0,
+                        right: 16.0,
+                        bottom: 30.0,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(
@@ -71,37 +75,77 @@ class HomePageState extends State<HomePage> {
                         ),
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Image.memory(
-                                ((landmarkInfo!.image)!),
-                                scale: 3,
+                              Row(
+                                children: [
+                                  Image.memory(
+                                    ((landmarkInfo!.image)!),
+                                    scale: 3,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    '${landmarkInfo.name}',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '${landmarkInfo.name}',
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                  size: 25,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 50,
                               ),
                             ],
                           ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.red,
-                              size: 25,
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              height: 45,
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/right_arrow.png',
+                                    width: 30,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  const Text(
+                                    'Indicatii',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],

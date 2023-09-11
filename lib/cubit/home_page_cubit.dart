@@ -25,7 +25,6 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
     Landmark? presedLandmark = await landmarkRepository!.selectLandmarkByScreenCoordinates(pos);
 
     if(presedLandmark != null){
-      print('Mergeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
       final data = presedLandmark.getImage(100,100);
       final image = await _decodeImageData(data);
       LandmarkInfo landmarkInfo = LandmarkInfo(name: presedLandmark.getName(), coordinates: presedLandmark.getCoordinates(), image: image);
