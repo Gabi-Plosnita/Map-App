@@ -22,9 +22,12 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
   late PermissionStatus _locationPermissionStatus = PermissionStatus.denied;
   late bool _hasLiveDataSource = false;
 
-  LandmarkRepositoryImpl({required GemMapController mapController}) : _mapController = mapController{
-    SearchService.create(_mapController.mapId).then((service) => _searchService = service);
-    PositionService.create(_mapController.mapId).then((service) => _positionService = service);
+  LandmarkRepositoryImpl({required GemMapController mapController})
+      : _mapController = mapController {
+    SearchService.create(_mapController.mapId)
+        .then((service) => _searchService = service);
+    PositionService.create(_mapController.mapId)
+        .then((service) => _positionService = service);
   }
 
   @override
@@ -57,41 +60,44 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
   }
 
   @override
-  Future<void> centerOnCoordinates(Coordinates coordinates, int width, int height) async{
-    await _mapController.centerOnCoordinates(coordinates,viewAngle: 45,xy: XyType(x: width,y:height));
+  Future<void> centerOnCoordinates(Coordinates coordinates) async {
+    await _mapController.centerOnCoordinates(coordinates,
+        viewAngle: 0,
+        xy: XyType(
+            x: _mapController.viewport.width ~/ 2,
+            y: _mapController.viewport.height ~/ 2));
   }
 
   @override
-  Future<Landmark?> selectLandmarkByScreenCoordinates(Point<num> position) async {
+  Future<Landmark?> selectLandmarkByScreenCoordinates(
+      Point<num> position) async {
+    // Select the object at the tap position.
+    await _mapController.selectMapObjects(position);
 
-      // Select the object at the tap position.
-      await _mapController.selectMapObjects(position);
+    // Get the selected landmarks.
+    final landmarks = await _mapController.cursorSelectionLandmarks();
 
-      // Get the selected landmarks.
-      final landmarks = await _mapController.cursorSelectionLandmarks();
+    final landmarksSize = await landmarks.size();
 
-      final landmarksSize = await landmarks.size();
+    // Check if there is a selected Landmark.
+    if (landmarksSize == 0) return null;
 
-      // Check if there is a selected Landmark.
-      if (landmarksSize == 0) return null;
+    // Highlight the landmark on the map.
+    _mapController.activateHighlight(landmarks);
 
-      // Highlight the landmark on the map.
-      _mapController.activateHighlight(landmarks);
+    final lmk = await landmarks.at(0);
 
-      final lmk = await landmarks.at(0);
-
-      return lmk;
+    return lmk;
   }
 
   @override
-  void unhighlightLandmark(){
+  void unhighlightLandmark() {
     _mapController.deactivateAllHighlights();
   }
-  
+
   @override
   Future<void> followPosition() async {
-
-     if (kIsWeb) {
+    if (kIsWeb) {
       // On web platform permission are handled differently than other platforms.
       // The SDK handles the request of permission for location
       _locationPermissionStatus = PermissionStatus.granted;
