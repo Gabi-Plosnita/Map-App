@@ -73,9 +73,9 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
   // Search functions //
 
   @override
-  Future<List<Landmark>> searchByText(
+  Future<List<LandmarkInfo>> searchByText(
       String text, Coordinates coordinates) async {
-    var completer = Completer<List<Landmark>>();
+    var completer = Completer<List<LandmarkInfo>>();
 
     _searchService.search(text, coordinates, (err, results) async {
       if (err != GemError.success || results == null) {
@@ -83,12 +83,14 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
         return;
       }
       final size = await results.size();
-      List<Landmark> searchResults = [];
+      List<LandmarkInfo> searchResults = [];
 
       for (int i = 0; i < size; i++) {
         final gemLmk = await results.at(i);
 
-        searchResults.add(gemLmk);
+        final lamdmarkInfo= await _getLandmarkInfo(gemLmk);
+
+        searchResults.add(lamdmarkInfo!);
       }
 
       if (!completer.isCompleted) completer.complete(searchResults);
