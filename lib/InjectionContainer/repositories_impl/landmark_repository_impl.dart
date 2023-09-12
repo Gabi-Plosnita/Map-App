@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+//import 'package:flutter/material.dart';
+//import 'package:flutter/widgets.dart';
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
-import 'package:gem_kit/api/gem_mapviewrendersettings.dart';
-import 'package:gem_kit/api/gem_routingservice.dart';
+//import 'package:gem_kit/api/gem_mapviewrendersettings.dart';
+//import 'package:gem_kit/api/gem_routingservice.dart';
 import 'package:gem_kit/api/gem_searchservice.dart';
 import 'package:gem_kit/api/gem_types.dart';
 import 'package:gem_kit/gem_kit_basic.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
-import 'package:map_app/SearchPage/search_page.dart';
+//import 'package:map_app/SearchPage/search_page.dart';
 
 class LandmarkRepositoryImpl implements LandmarkRepository {
   final GemMapController _mapController;
