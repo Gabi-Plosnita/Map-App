@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gem_kit/api/gem_landmark.dart';
 import 'package:map_app/InjectionContainer/injection_container.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
 import 'package:map_app/InjectionContainer/repositories/position_repository.dart';
@@ -25,14 +22,11 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
   }
 
   Future<void> onMappPress(Point<num> pos) async{
-    Landmark? presedLandmark = await landmarkRepository!.selectLandmarkByScreenCoordinates(pos);
+    LandmarkInfo? presedLandmarkInfo = await landmarkRepository!.selectLandmarkByScreenCoordinates(pos);
 
-    if(presedLandmark != null){
-      final data = presedLandmark.getImage(100,100);
-      final image = await _decodeImageData(data);
-      LandmarkInfo landmarkInfo = LandmarkInfo(name: presedLandmark.getName(), coordinates: presedLandmark.getCoordinates(), image: image);
-      landmarkRepository!.centerOnCoordinates(presedLandmark.getCoordinates());
-      emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmarkInfo: landmarkInfo));
+    if(presedLandmarkInfo != null){
+      landmarkRepository!.centerOnCoordinates(presedLandmarkInfo.coordinates!);
+      emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmarkInfo: presedLandmarkInfo));
     }
   }
 
@@ -43,25 +37,6 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
 
   Future<void> followPosition() async{
     positionRepository!.followPosition();
-  }
-
-  Future<Uint8List?> _decodeImageData(Uint8List data) async {
-    Completer<Uint8List?> c = Completer<Uint8List?>();
-
-    int width = 100;
-    int height = 100;
-
-    decodeImageFromPixels(data, width, height, PixelFormat.rgba8888,
-        (Image img) async {
-      final data = await img.toByteData(format: ImageByteFormat.png);
-      if (data == null) {
-        c.complete(null);
-      }
-      final list = data!.buffer.asUint8List();
-      c.complete(list);
-    });
-
-    return c.future;
   }
 
 }
