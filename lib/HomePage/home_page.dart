@@ -27,7 +27,6 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> onMapCreated(GemMapController controller) async {
-
     mapController = controller;
     SdkSettings.setAppAuthorization(_token);
 
@@ -38,7 +37,6 @@ class HomePageState extends State<HomePage> {
       // functie care apeleaza cubit-ul onMapPress
       await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
     });
-    await BlocProvider.of<HomePageCubit>(context).followPosition();
   }
 
   @override
@@ -56,6 +54,30 @@ class HomePageState extends State<HomePage> {
                 const Positioned(
                   top: 35,
                   child: AppBarWidget(),
+                ),
+                Positioned(
+                  bottom: 20,
+                  right: 20,
+                  child: Container(
+                    decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                    color: Colors.white,
+                  ),
+                    child: IconButton(
+                      onPressed: () async{
+                        await BlocProvider.of<HomePageCubit>(context).followPosition();
+                      },
+                      icon: Image.asset('assets/follow_location.png',color: Colors.red),
+                    ),
+                  ),
                 ),
                 if (state.currentState == HomePageEnumState.landmarkPressed)
                   Positioned(
