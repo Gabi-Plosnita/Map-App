@@ -16,7 +16,8 @@ class SearchPageCubit extends Cubit<SearchPageCubitState> {
     landmarkRepository = InjectionContainer.repoInstance.get<LandmarkRepository>();
   }
 
-  Future<void> onSearchBarPressed(BuildContext context) async {
-    landmarkRepository!.onSearchBarPressed(context);
-  }
+  // Future<void> onSearchBarPressed(BuildContext context) async {
+  //   landmarkRepository!.onSearchBarPressed(context);
+  //   emit(state.copyWith(currentState: SearchPageEnumState.onSearch));
+  // }
 }

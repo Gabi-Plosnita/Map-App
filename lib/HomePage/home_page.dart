@@ -79,7 +79,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                if (state.currentState == HomePageEnumState.landmarkPressed)
+                if (state.currentState == HomePageEnumState.landmarkPressed) // sau SearchPageEnumState.onSearch
                   Positioned(
                     bottom: 0,
                     left: 0,

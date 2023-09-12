@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
 
@@ -8,4 +9,6 @@ abstract class LandmarkRepository {
   Future<void> centerOnCoordinates(Coordinates coordinates);
   Future<Landmark?> selectLandmarkByScreenCoordinates(Point<num> position);
   void unhighlightLandmark();
+
+  //Future<void> onSearchBarPressed(BuildContext context);
 }
