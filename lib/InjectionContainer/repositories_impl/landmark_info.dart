@@ -7,7 +7,4 @@ class LandmarkInfo {
   Uint8List? image;
 
   LandmarkInfo({required this.name, required this.coordinates, required this.image});
-
 }
-
-// deactivateAllHighlights din mapcontroller //

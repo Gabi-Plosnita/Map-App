@@ -8,17 +8,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
 import 'package:map_app/InjectionContainer/injection_container.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
+import 'package:map_app/InjectionContainer/repositories/position_repository.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 
 part 'home_page_cubit_state.dart';
 
 class HomePageCubit extends Cubit<HomePageCubitState> {
   LandmarkRepository? landmarkRepository;
+  PositionRepository? positionRepository;
 
   HomePageCubit() : super (const HomePageCubitState());
 
   void setRepos(){
     landmarkRepository = InjectionContainer.repoInstance.get<LandmarkRepository>();
+    positionRepository = InjectionContainer.repoInstance.get<PositionRepository>();
   }
 
   Future<void> onMappPress(Point<num> pos) async{
@@ -39,7 +42,7 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
   }
 
   Future<void> followPosition() async{
-    landmarkRepository!.followPosition();
+    positionRepository!.followPosition();
   }
 
   Future<Uint8List?> _decodeImageData(Uint8List data) async {

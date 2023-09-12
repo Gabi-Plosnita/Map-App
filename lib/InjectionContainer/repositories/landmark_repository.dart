@@ -8,5 +8,4 @@ abstract class LandmarkRepository {
   Future<void> centerOnCoordinates(Coordinates coordinates);
   Future<Landmark?> selectLandmarkByScreenCoordinates(Point<num> position);
   void unhighlightLandmark();
-  Future<void> followPosition();
 }
