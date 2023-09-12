@@ -6,6 +6,7 @@ import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
 import 'package:gem_kit/api/gem_mapviewpreferences.dart';
 import 'package:gem_kit/api/gem_searchservice.dart';
+import 'package:gem_kit/api/gem_types.dart';
 import 'package:gem_kit/gem_kit_basic.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:gem_kit/gem_kit_position.dart';
@@ -56,8 +57,8 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
   }
 
   @override
-  Future<void> centerOnCoordinates(Coordinates coordinates) async{
-    await _mapController.centerOnCoordinates(coordinates);
+  Future<void> centerOnCoordinates(Coordinates coordinates, int width, int height) async{
+    await _mapController.centerOnCoordinates(coordinates,viewAngle: 45,xy: XyType(x: width,y:height));
   }
 
   @override

@@ -27,6 +27,7 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> onMapCreated(GemMapController controller) async {
+
     mapController = controller;
     SdkSettings.setAppAuthorization(_token);
 
@@ -123,7 +124,7 @@ class HomePageState extends State<HomePage> {
                               height: 45,
                               width: MediaQuery.of(context).size.width * 0.7,
                               decoration: BoxDecoration(
-                                color: Color.fromRGBO(63, 81, 181, 1),
+                                color: const Color.fromRGBO(63, 81, 181, 1),
                                 //color: Colors.green,
                                 borderRadius: BorderRadius.circular(50),
                                 border: Border.all(

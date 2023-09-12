@@ -28,7 +28,7 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
       final data = presedLandmark.getImage(100,100);
       final image = await _decodeImageData(data);
       LandmarkInfo landmarkInfo = LandmarkInfo(name: presedLandmark.getName(), coordinates: presedLandmark.getCoordinates(), image: image);
-      landmarkRepository!.centerOnCoordinates(presedLandmark.getCoordinates());
+      landmarkRepository!.centerOnCoordinates(presedLandmark.getCoordinates(),1080~/2,2220~/2);  // schimba cu dimensiuni nehardcodate
       emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmarkInfo: landmarkInfo));
     }
   }
