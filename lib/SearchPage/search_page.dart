@@ -8,16 +8,19 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         title: CupertinoSearchTextField(
+          controller: controller,
           onSubmitted: (String text) async {
             await BlocProvider.of<SearchPageCubit>(context)
                 .onSearchBarSubmitted(text);
           },
           onSuffixTap: (){
+            controller.clear();
             BlocProvider.of<SearchPageCubit>(context).clearSearchResults();
           },
           padding: const EdgeInsets.all(10),
