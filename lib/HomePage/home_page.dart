@@ -62,26 +62,30 @@ class HomePageState extends State<HomePage> {
                   right: 20,
                   child: Container(
                     decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 10,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                    color: Colors.white,
-                  ),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
                     child: IconButton(
-                      onPressed: () async{
-                        await BlocProvider.of<HomePageCubit>(context).followPosition();
+                      onPressed: () async {
+                        await BlocProvider.of<HomePageCubit>(context)
+                            .followPosition();
                       },
-                      icon: Image.asset('assets/follow_location.png',color: Colors.red),
+                      icon: Image.asset('assets/follow_location.png',
+                          color: Colors.red),
                     ),
                   ),
                 ),
-                if (state.currentState == HomePageEnumState.landmarkPressed) // sau SearchPageEnumState.onSearch
+                if (state.currentState ==
+                    HomePageEnumState
+                        .landmarkPressed) // sau SearchPageEnumState.onSearch
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -117,11 +121,19 @@ class HomePageState extends State<HomePage> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  Text(
-                                    '${landmarkInfo.name}',
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.63,
+                                    ),
+                                    child: Text(
+                                      '${landmarkInfo.name}',
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
