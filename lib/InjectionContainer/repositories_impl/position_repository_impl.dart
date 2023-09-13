@@ -38,6 +38,7 @@ class PositionRepositoryImpl implements PositionRepository{
     if (!_hasLiveDataSource) {
       _positionService.removeDataSource();
       _positionService.setLiveDataSource();
+      //_positionService.addPositionListener((p0) {Callback(p0.coordinates)})
       _hasLiveDataSource = true;
     }
 

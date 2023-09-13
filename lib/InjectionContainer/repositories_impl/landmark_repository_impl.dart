@@ -106,13 +106,14 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
   }
   
   @override
-  Future<void> onSearchBarPressed(BuildContext context) async{
+  Future<LandmarkInfo?> onSearchBarPressed(BuildContext context) async{
     final result = await Navigator.pushNamed(context, searchPage);
 
     if (result is! LandmarkInfo) {
-      return;
+      return null;
     }
     Coordinates coordinates = result.coordinates!;
     await _mapController.centerOnCoordinates(coordinates);
+    return result;
   }
 }

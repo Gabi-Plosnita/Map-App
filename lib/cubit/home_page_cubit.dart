@@ -41,9 +41,8 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
   }
 
   Future<void> onSearchBarPressed(BuildContext context) async{
-    await landmarkRepository!.onSearchBarPressed(context);
-
-    // emit copywith
+    LandmarkInfo? result = await landmarkRepository!.onSearchBarPressed(context);
+    if(result != null) emit(state.copyWith(currentLandmarkInfo: result));
   }
 
 }

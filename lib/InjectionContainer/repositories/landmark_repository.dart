@@ -11,5 +11,5 @@ abstract class LandmarkRepository {
   void unhighlightLandmark();
 
   Future<List<LandmarkInfo>> searchByText(String text);
-  Future<void> onSearchBarPressed(BuildContext context);
+  Future<LandmarkInfo?> onSearchBarPressed(BuildContext context);
 }
