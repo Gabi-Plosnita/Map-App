@@ -9,7 +9,8 @@ part 'search_page_state.dart';
 class SearchPageCubit extends Cubit<SearchPageCubitState> {
   LandmarkRepository? landmarkRepository;
 
-  SearchPageCubit() : super(const SearchPageCubitState(landmarksInfoList: null));
+  SearchPageCubit()
+      : super(const SearchPageCubitState(landmarksInfoList: null));
 
   void setRepos() {
     landmarkRepository =
@@ -18,6 +19,11 @@ class SearchPageCubit extends Cubit<SearchPageCubitState> {
 
   Future<void> onSearchBarSubmitted(String text) async {
     List<LandmarkInfo> landmarks = await landmarkRepository!.searchByText(text);
+    emit(state.copyWith(landmarksInfoList: landmarks));
+  }
+
+  void clearSearchResults() {
+    List<LandmarkInfo> landmarks = [];
     emit(state.copyWith(landmarksInfoList: landmarks));
   }
 }

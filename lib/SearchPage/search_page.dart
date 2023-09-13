@@ -17,6 +17,9 @@ class SearchPage extends StatelessWidget {
             await BlocProvider.of<SearchPageCubit>(context)
                 .onSearchBarSubmitted(text);
           },
+          onSuffixTap: (){
+            BlocProvider.of<SearchPageCubit>(context).clearSearchResults();
+          },
           padding: const EdgeInsets.all(10),
           placeholder: 'Search',
           prefixIcon: const Icon(
@@ -36,6 +39,7 @@ class SearchPage extends StatelessWidget {
         leading: IconButton(
           iconSize: 35,
           onPressed: () {
+            BlocProvider.of<SearchPageCubit>(context).clearSearchResults();
             Navigator.pop(context);
           },
           icon: const Icon(
