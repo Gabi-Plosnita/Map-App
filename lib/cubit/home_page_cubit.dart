@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_app/InjectionContainer/injection_container.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
@@ -37,6 +38,10 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
 
   Future<void> followPosition() async{
     positionRepository!.followPosition();
+  }
+
+  Future<void> onSearchBarPressed(BuildContext context) async{
+    await landmarkRepository!.onSearchBarPressed(context);
   }
 
 }

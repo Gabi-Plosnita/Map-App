@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gem_kit/api/gem_coordinates.dart';
 
 import 'dart:math';
@@ -10,4 +11,5 @@ abstract class LandmarkRepository {
   void unhighlightLandmark();
 
   Future<List<LandmarkInfo>> searchByText(String text);
+  Future<void> onSearchBarPressed(BuildContext context);
 }

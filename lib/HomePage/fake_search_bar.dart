@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:map_app/Routes/routes_name.dart';
+import 'package:map_app/cubit/home_page_cubit.dart';
 
 class FakeSearchBar extends StatelessWidget {
   const FakeSearchBar({super.key});
@@ -8,8 +10,8 @@ class FakeSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // apelezi on search bar pressed din cubit //
-        Navigator.pushNamed(context, searchPage);
+        BlocProvider.of<HomePageCubit>(context).onSearchBarPressed(context);
+        //Navigator.pushNamed(context, searchPage);
       },
       child: Container(
         height: 40,

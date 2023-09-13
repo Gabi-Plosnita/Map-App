@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
 import 'package:gem_kit/api/gem_searchservice.dart';
@@ -10,6 +11,7 @@ import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/utility_functions.dart';
+import 'package:map_app/Routes/routes_name.dart';
 
 class LandmarkRepositoryImpl implements LandmarkRepository {
   final GemMapController _mapController;
@@ -101,5 +103,16 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
     final result = await completer.future;
 
     return result;
+  }
+  
+  @override
+  Future<void> onSearchBarPressed(BuildContext context) async{
+    final result = await Navigator.pushNamed(context, searchPage);
+
+    if (result is! LandmarkInfo) {
+      return;
+    }
+    Coordinates coordinates = result.coordinates!;
+    await _mapController.centerOnCoordinates(coordinates);
   }
 }

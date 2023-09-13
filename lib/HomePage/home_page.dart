@@ -36,7 +36,6 @@ class HomePageState extends State<HomePage> {
     context.read<SearchPageCubit>().setRepos();
 
     mapController.registerTouchCallback((pos) async {
-      // functie care apeleaza cubit-ul onMapPress
       await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
     });
   }
