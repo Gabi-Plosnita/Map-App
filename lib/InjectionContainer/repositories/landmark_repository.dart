@@ -9,5 +9,5 @@ abstract class LandmarkRepository {
   Future<LandmarkInfo?> selectLandmarkByScreenCoordinates(Point<num> position);
   void unhighlightLandmark();
 
-  Future<List<LandmarkInfo>> searchByText(String text, Coordinates coordinates);
+  Future<List<LandmarkInfo>> searchByText(String text);
 }

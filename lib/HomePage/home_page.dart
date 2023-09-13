@@ -7,6 +7,7 @@ import 'package:map_app/HomePage/app_bar_widget.dart';
 import 'package:map_app/InjectionContainer/injection_container.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 import 'package:map_app/cubit/home_page_cubit.dart';
+import 'package:map_app/cubit/search_page_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,7 +20,7 @@ class HomePageState extends State<HomePage> {
   late GemMapController mapController;
 
   final _token =
-      'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkYTQzZmFiZS01Y2ZhLTQ3MDYtYmEzNy03OTJkMTMzNzNiN2EiLCJleHAiOjE2OTQ1NTI0MDAsImlzcyI6IkdlbmVyYWwgTWFnaWMiLCJqdGkiOiI3M2NlZTc5Zi0yMTZmLTQ4MGMtODZmNS1iY2ZiODEyOWQxYmQiLCJuYmYiOjE2OTM5ODQxNDh9.uBZrSj2-WHuTcWN7cVYDR1DfyRgUmG9dmbaBp7KqaFX9iJGBBt86WQes4NWrCM9Tv4f4JVyX6vtinFEvc-X-Pw';
+      'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkYTQzZmFiZS01Y2ZhLTQ3MDYtYmEzNy03OTJkMTMzNzNiN2EiLCJleHAiOjE3OTg3NTQ0MDAsImlzcyI6IkdlbmVyYWwgTWFnaWMiLCJqdGkiOiJhYWJhMGExZS1mMDFkLTQwMWUtODY4Ny02ZTcwYWU4ZDExYmYiLCJuYmYiOjE2OTQ1OTMxOTl9.csnHl0ksWVcD7NCmbeVERlFLcNIFsjnelSCJWbmsHgT-RljHEghDpjwzDvGPimvi2Y2aYy6V6i4BC4nwZrF_nA';
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class HomePageState extends State<HomePage> {
 
     InjectionContainer.init(mapController);
     context.read<HomePageCubit>().setRepos();
+    context.read<SearchPageCubit>().setRepos();
 
     mapController.registerTouchCallback((pos) async {
       // functie care apeleaza cubit-ul onMapPress

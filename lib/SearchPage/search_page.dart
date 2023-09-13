@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_app/cubit/search_page_cubit.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -11,12 +13,16 @@ class SearchPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: CupertinoSearchTextField(
+          onSubmitted: (String text) async {
+            await BlocProvider.of<SearchPageCubit>(context)
+                .onSearchBarSubmitted(text);
+          },
           padding: const EdgeInsets.all(10),
           placeholder: 'Search',
           prefixIcon: const Icon(
             Icons.search,
             color: Colors.black,
-          ), 
+          ),
           autofocus: true,
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 247, 245, 245),
@@ -38,6 +44,17 @@ class SearchPage extends StatelessWidget {
           ),
         ),
       ),
+      body: BlocBuilder<SearchPageCubit, SearchPageCubitState>(
+          builder: (context, state) {
+        return ListView.builder(
+          itemCount: state.landmarksInfoList?.length ?? 0,
+          itemBuilder: (BuildContext context, int index) {
+            return ListTile(
+              title: Text(state.landmarksInfoList![index].name!),
+            );
+          },
+        );
+      }),
     );
   }
 }

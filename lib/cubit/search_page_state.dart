@@ -1,25 +1,14 @@
 part of 'search_page_cubit.dart';
 
-enum SearchPageEnumState {
-  notOnSearching,
-  onSearch,
-}
-
 class SearchPageCubitState extends Equatable {
-  final SearchPageEnumState currentState;
-  final LandmarkInfo? currentLandmarkInfo;
+  final List<LandmarkInfo>? landmarksInfoList;
 
-  const SearchPageCubitState(
-      {this.currentState = SearchPageEnumState.notOnSearching,
-      this.currentLandmarkInfo});
+  const SearchPageCubitState({required this.landmarksInfoList});
 
-  SearchPageCubitState copyWith(
-          {SearchPageEnumState? currentState,
-          LandmarkInfo? currentLandmarkInfo}) =>
+  SearchPageCubitState copyWith({List<LandmarkInfo>? landmarksInfoList}) =>
       SearchPageCubitState(
-          currentState: currentState ?? this.currentState,
-          currentLandmarkInfo: currentLandmarkInfo ?? this.currentLandmarkInfo);
+          landmarksInfoList: landmarksInfoList ?? this.landmarksInfoList);
 
   @override
-  List<Object?> get props => [currentState, currentLandmarkInfo];
+  List<Object?> get props => [landmarksInfoList];
 }

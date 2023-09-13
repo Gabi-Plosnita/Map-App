@@ -58,26 +58,28 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
     _mapController.deactivateAllHighlights();
   }
 
-  Future<LandmarkInfo?> _getLandmarkInfo(Landmark? landmark) async {
-    if (landmark != null) {
-      final data = landmark.getImage(100, 100);
-      final image = await decodeImageData(data);
-      return LandmarkInfo(
-          name: landmark.getName(),
-          coordinates: landmark.getCoordinates(),
-          image: image);
-    }
-    return null;
+  Future<LandmarkInfo> _getLandmarkInfo(Landmark landmark) async {   // Treat null in cubit //
+    final data = landmark.getImage(100, 100);
+    final image = await decodeImageData(data);
+    return LandmarkInfo(
+        name: landmark.getName(),
+        coordinates: landmark.getCoordinates(),
+        image: image);
   }
 
   // Search functions //
 
   @override
-  Future<List<LandmarkInfo>> searchByText(
-      String text, Coordinates coordinates) async {
+  Future<List<LandmarkInfo>> searchByText(String text) async {
     var completer = Completer<List<LandmarkInfo>>();
 
-    _searchService.search(text, coordinates, (err, results) async {
+    // Current screen coordinates //
+    final coordinates = _mapController.transformScreenToWgs(XyType(
+      x: _mapController.viewport.width ~/ 2,
+      y: _mapController.viewport.height ~/ 2,
+    ));
+
+    _searchService.search(text, coordinates!, (err, results) async {
       if (err != GemError.success || results == null) {
         completer.complete([]);
         return;
@@ -88,9 +90,9 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
       for (int i = 0; i < size; i++) {
         final gemLmk = await results.at(i);
 
-        final lamdmarkInfo= await _getLandmarkInfo(gemLmk);
+        final lamdmarkInfo = await _getLandmarkInfo(gemLmk);
 
-        searchResults.add(lamdmarkInfo!);
+        searchResults.add(lamdmarkInfo);
       }
 
       if (!completer.isCompleted) completer.complete(searchResults);
