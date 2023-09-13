@@ -15,7 +15,7 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
   LandmarkRepository? landmarkRepository;
   PositionRepository? positionRepository;
 
-  HomePageCubit() : super (const HomePageCubitState());
+  HomePageCubit() : super (const HomePageCubitState(currentLandmarkInfo: null));
 
   void setRepos(){
     landmarkRepository = InjectionContainer.repoInstance.get<LandmarkRepository>();
@@ -27,13 +27,13 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
 
     if(presedLandmarkInfo != null){
       landmarkRepository!.centerOnCoordinates(presedLandmarkInfo.coordinates!);
-      emit(state.copyWith(currentState: HomePageEnumState.landmarkPressed,currentLandmarkInfo: presedLandmarkInfo));
+      emit(state.copyWith(currentLandmarkInfo: presedLandmarkInfo));
     }
   }
 
   void onClosedButtonPressed(){
     landmarkRepository!.unhighlightLandmark();
-    emit(state.copyWith(currentState: HomePageEnumState.initialState,currentLandmarkInfo: null));
+    emit(state.copyWith(currentLandmarkInfo: null));
   }
 
   Future<void> followPosition() async{
@@ -42,6 +42,8 @@ class HomePageCubit extends Cubit<HomePageCubitState> {
 
   Future<void> onSearchBarPressed(BuildContext context) async{
     await landmarkRepository!.onSearchBarPressed(context);
+
+    // emit copywith
   }
 
 }
