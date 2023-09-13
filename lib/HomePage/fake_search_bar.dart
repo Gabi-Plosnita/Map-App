@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:map_app/Routes/routes_name.dart';
 import 'package:map_app/cubit/home_page_cubit.dart';
 
 class FakeSearchBar extends StatelessWidget {
