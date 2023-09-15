@@ -5,6 +5,7 @@ class LandmarkInfo {
   String? name;
   Coordinates? coordinates;
   Uint8List? image;
+  double distanceToLandmark;
 
-  LandmarkInfo({required this.name, required this.coordinates, required this.image});
+  LandmarkInfo({required this.name, required this.coordinates, required this.image, required this.distanceToLandmark});
 }

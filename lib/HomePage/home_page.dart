@@ -22,18 +22,16 @@ class HomePageState extends State<HomePage> {
   final _token =
       'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJkYTQzZmFiZS01Y2ZhLTQ3MDYtYmEzNy03OTJkMTMzNzNiN2EiLCJleHAiOjE3OTg3NTQ0MDAsImlzcyI6IkdlbmVyYWwgTWFnaWMiLCJqdGkiOiJhYWJhMGExZS1mMDFkLTQwMWUtODY4Ny02ZTcwYWU4ZDExYmYiLCJuYmYiOjE2OTQ1OTMxOTl9.csnHl0ksWVcD7NCmbeVERlFLcNIFsjnelSCJWbmsHgT-RljHEghDpjwzDvGPimvi2Y2aYy6V6i4BC4nwZrF_nA';
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   Future<void> onMapCreated(GemMapController controller) async {
     mapController = controller;
     SdkSettings.setAppAuthorization(_token);
 
     InjectionContainer.init(mapController);
+
     context.read<HomePageCubit>().setRepos();
     context.read<SearchPageCubit>().setRepos();
+
+    await context.read<HomePageCubit>().initServices();
 
     mapController.registerTouchCallback((pos) async {
       await BlocProvider.of<HomePageCubit>(context).onMappPress(pos);
@@ -82,7 +80,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                if (state.currentLandmarkInfo != null) 
+                if (state.currentLandmarkInfo != null)
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -118,20 +116,27 @@ class HomePageState extends State<HomePage> {
                                   const SizedBox(
                                     width: 10,
                                   ),
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxWidth:
-                                          MediaQuery.of(context).size.width *
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.63,
-                                    ),
-                                    child: Text(
-                                      '${landmarkInfo.name}',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
+                                        ),
+                                        child: Text(
+                                          '${landmarkInfo.name}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      Text('${state.currentLandmarkInfo?.distanceToLandmark} Km'),
+                                    ],
                                   ),
                                   const SizedBox(
                                     height: 50,

@@ -13,8 +13,7 @@ class SearchPageCubit extends Cubit<SearchPageCubitState> {
       : super(const SearchPageCubitState(landmarksInfoList: null));
 
   void setRepos() {
-    landmarkRepository =
-        InjectionContainer.repoInstance.get<LandmarkRepository>();
+    landmarkRepository = InjectionContainer.repoInstance.get<LandmarkRepository>();
   }
 
   Future<void> onSearchBarSubmitted(String text) async {

@@ -1,36 +1,56 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gem_kit/api/gem_coordinates.dart';
 import 'package:gem_kit/api/gem_landmark.dart';
+import 'package:gem_kit/api/gem_mapviewpreferences.dart';
 import 'package:gem_kit/api/gem_searchservice.dart';
 import 'package:gem_kit/api/gem_types.dart';
 import 'package:gem_kit/gem_kit_basic.dart';
 import 'package:gem_kit/gem_kit_map_controller.dart';
+import 'package:gem_kit/gem_kit_position.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/landmark_info.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/utility_functions.dart';
 import 'package:map_app/Routes/routes_name.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LandmarkRepositoryImpl implements LandmarkRepository {
   final GemMapController _mapController;
 
   late SearchService _searchService;
 
+  late PositionService _positionService;
+  late PermissionStatus _locationPermissionStatus = PermissionStatus.denied;
+  late bool _hasLiveDataSource = false;
+
+  Coordinates? _currentCoordinates;
+
   LandmarkRepositoryImpl({required GemMapController mapController})
-      : _mapController = mapController {
-    SearchService.create(_mapController.mapId)
+      : _mapController = mapController;
+
+  @override
+  Future<void> initServices() async {
+    await SearchService.create(_mapController.mapId)
         .then((service) => _searchService = service);
+    await PositionService.create(_mapController.mapId)
+        .then((service) => _positionService = service);
+    await _positionService.addPositionListener((pos) {
+      _currentCoordinates = pos.coordinates;
+    });
   }
 
   @override
   Future<void> centerOnCoordinates(Coordinates coordinates) async {
+    final animation = GemAnimation(type: EAnimation.AnimationLinear);
     await _mapController.centerOnCoordinates(coordinates,
         viewAngle: 0,
         xy: XyType(
             x: _mapController.viewport.width ~/ 2,
-            y: _mapController.viewport.height ~/ 2));
+            y: _mapController.viewport.height ~/ 2),
+        animation: animation);
   }
 
   @override
@@ -60,13 +80,18 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
     _mapController.deactivateAllHighlights();
   }
 
-  Future<LandmarkInfo> _getLandmarkInfo(Landmark landmark) async {   // Treat null in cubit //
+  Future<LandmarkInfo> _getLandmarkInfo(Landmark landmark) async {
     final data = landmark.getImage(100, 100);
     final image = await decodeImageData(data);
+    double distance = (_currentCoordinates == null)
+        ? 0
+        : ((landmark.getCoordinates().distance(_currentCoordinates!)) ~/ 100) /
+            10;
     return LandmarkInfo(
         name: landmark.getName(),
         coordinates: landmark.getCoordinates(),
-        image: image);
+        image: image,
+        distanceToLandmark: distance);
   }
 
   // Search functions //
@@ -104,16 +129,42 @@ class LandmarkRepositoryImpl implements LandmarkRepository {
 
     return result;
   }
-  
+
   @override
-  Future<LandmarkInfo?> onSearchBarPressed(BuildContext context) async{
+  Future<LandmarkInfo?> onSearchBarPressed(BuildContext context) async {
     final result = await Navigator.pushNamed(context, searchPage);
 
     if (result is! LandmarkInfo) {
       return null;
     }
     Coordinates coordinates = result.coordinates!;
-    await _mapController.centerOnCoordinates(coordinates);
+    final animation = GemAnimation(type: EAnimation.AnimationLinear);
+    await _mapController.centerOnCoordinates(coordinates, animation: animation);
     return result;
+  }
+
+  // Follow Position //
+  @override
+  Future<void> followPosition() async {
+    if (kIsWeb) {
+      _locationPermissionStatus = PermissionStatus.granted;
+    } else {
+      _locationPermissionStatus = await Permission.locationWhenInUse.request();
+    }
+
+    if (_locationPermissionStatus != PermissionStatus.granted) {
+      return;
+    }
+
+    if (!_hasLiveDataSource) {
+      _positionService.removeDataSource();
+      _positionService.setLiveDataSource();
+      _hasLiveDataSource = true;
+    }
+
+    if (_locationPermissionStatus == PermissionStatus.granted) {
+      final animation = GemAnimation(type: EAnimation.AnimationLinear);
+      _mapController.startFollowingPosition(animation: animation);
+    }
   }
 }

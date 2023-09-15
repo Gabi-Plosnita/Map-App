@@ -1,9 +1,7 @@
 import 'package:gem_kit/gem_kit_map_controller.dart';
 import 'package:get_it/get_it.dart';
 import 'package:map_app/InjectionContainer/repositories/landmark_repository.dart';
-import 'package:map_app/InjectionContainer/repositories/position_repository.dart';
 import 'package:map_app/InjectionContainer/repositories_impl/landmark_repository_impl.dart';
-import 'package:map_app/InjectionContainer/repositories_impl/position_repository_impl.dart';
 
 class InjectionContainer {
   static final repoInstance = GetIt.instance;
@@ -11,7 +9,5 @@ class InjectionContainer {
   static void init(GemMapController mapController) {
     repoInstance.registerLazySingleton<LandmarkRepository>(
         () => LandmarkRepositoryImpl(mapController: mapController));
-    repoInstance.registerLazySingleton<PositionRepository>(
-        () => PositionRepositoryImpl(mapController: mapController));
   }
 }

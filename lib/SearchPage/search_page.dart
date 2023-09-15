@@ -8,7 +8,7 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final controller = TextEditingController();
+    final controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -19,7 +19,7 @@ class SearchPage extends StatelessWidget {
             await BlocProvider.of<SearchPageCubit>(context)
                 .onSearchBarSubmitted(text);
           },
-          onSuffixTap: (){
+          onSuffixTap: () {
             controller.clear();
             BlocProvider.of<SearchPageCubit>(context).clearSearchResults();
           },
@@ -57,59 +57,61 @@ class SearchPage extends StatelessWidget {
           itemCount: state.landmarksInfoList?.length ?? 0,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
-              onTap: (){
+              onTap: () {
                 BlocProvider.of<SearchPageCubit>(context).clearSearchResults();
                 Navigator.of(context).pop(state.landmarksInfoList![index]);
               },
               child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: const BorderSide(
-                        color: Colors.grey,
-                        width: 2.0,
-                      ),
-                      bottom: (index + 1 == state.landmarksInfoList?.length)
-                          ? const BorderSide(
-                              color: Colors.grey,
-                              width: 2.0,
-                            )
-                          : BorderSide.none,
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: const BorderSide(
+                      color: Colors.grey,
+                      width: 2.0,
                     ),
+                    bottom: (index + 1 == state.landmarksInfoList?.length)
+                        ? const BorderSide(
+                            color: Colors.grey,
+                            width: 2.0,
+                          )
+                        : BorderSide.none,
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.memory(
-                            ((state.landmarksInfoList![index].image)!),
-                            scale: 3,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          ConstrainedBox(
-                            constraints: BoxConstraints(
-                                maxWidth:
-                                    MediaQuery.of(context).size.width * 0.82),
-                            child: Text(
-                              '${state.landmarksInfoList![index].name}',
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Image.memory(
+                          ((state.landmarksInfoList![index].image)!),
+                          scale: 3,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxWidth:
+                                  MediaQuery.of(context).size.width * 0.6),
+                          child: Text(
+                            '${state.landmarksInfoList![index].name}',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 50,
-                          ),
-                        ],
-                      ),
-                    ],
-                  )),
+                        ),
+                        // const SizedBox(
+                        //   height: 50,
+                        // ),
+                      ],
+                    ),
+                    Text('${state.landmarksInfoList![index].distanceToLandmark} Km'),
+                  ],
+                ),
+              ),
             );
           },
         );
